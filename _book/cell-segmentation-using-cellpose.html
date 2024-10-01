@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Cell Segmentation Using Cellpose | User Guide for IMC Analysis</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Cell Segmentation Using Cellpose | User Guide for IMC Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Cell Segmentation Using Cellpose | User Guide for IMC Analysis" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Oscar Dong" />
+
+
+<meta name="date" content="2024-10-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="processing-images-for-cellpose.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-the-imc-data-analysis-pipeline"><i class="fa fa-check"></i><b>1.1</b> Overview of the IMC Data Analysis Pipeline</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#structure-of-this-guide"><i class="fa fa-check"></i><b>1.2</b> Structure of this Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>1.3</b> Contributors</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="extracting-the-raw-imc-data.html"><a href="extracting-the-raw-imc-data.html"><i class="fa fa-check"></i><b>2</b> Extracting the Raw IMC Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="extracting-the-raw-imc-data.html"><a href="extracting-the-raw-imc-data.html#setting-up-a-conda-environment"><i class="fa fa-check"></i><b>2.1</b> Setting Up a <code>conda</code> Environment</a></li>
+<li class="chapter" data-level="2.2" data-path="extracting-the-raw-imc-data.html"><a href="extracting-the-raw-imc-data.html#processing-mcd-files"><i class="fa fa-check"></i><b>2.2</b> Processing MCD Files</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="extracting-the-raw-imc-data.html"><a href="extracting-the-raw-imc-data.html#setting-up-your-folders"><i class="fa fa-check"></i><b>2.2.1</b> Setting Up Your Folders</a></li>
+<li class="chapter" data-level="2.2.2" data-path="extracting-the-raw-imc-data.html"><a href="extracting-the-raw-imc-data.html#running-the-code"><i class="fa fa-check"></i><b>2.2.2</b> Running the Code</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="processing-images-for-cellpose.html"><a href="processing-images-for-cellpose.html"><i class="fa fa-check"></i><b>3</b> Processing Images For Cellpose</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="processing-images-for-cellpose.html"><a href="processing-images-for-cellpose.html#removing-outliers-from-images"><i class="fa fa-check"></i><b>3.1</b> Removing Outliers From Images</a></li>
+<li class="chapter" data-level="3.2" data-path="processing-images-for-cellpose.html"><a href="processing-images-for-cellpose.html#generating-images-for-cellpose"><i class="fa fa-check"></i><b>3.2</b> Generating Images for Cellpose</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html"><i class="fa fa-check"></i><b>4</b> Cell Segmentation Using Cellpose</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html#installing-and-opening-cellpose"><i class="fa fa-check"></i><b>4.1</b> Installing and Opening Cellpose</a>
+<ul>
+<li class="chapter" data-level="" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html#cpu-version"><i class="fa fa-check"></i>CPU Version</a></li>
+<li class="chapter" data-level="" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html#gpu-version"><i class="fa fa-check"></i>GPU Version</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html#using-the-cellpose-gui"><i class="fa fa-check"></i><b>4.2</b> Using the Cellpose GUI</a></li>
+<li class="chapter" data-level="4.3" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html#training-a-custom-cellpose-model"><i class="fa fa-check"></i><b>4.3</b> Training a Custom Cellpose Model</a></li>
+<li class="chapter" data-level="4.4" data-path="cell-segmentation-using-cellpose.html"><a href="cell-segmentation-using-cellpose.html#batch-segmentation"><i class="fa fa-check"></i><b>4.4</b> Batch Segmentation</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">User Guide for IMC Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cell-segmentation-using-cellpose" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Cell Segmentation Using Cellpose<a href="cell-segmentation-using-cellpose.html#cell-segmentation-using-cellpose" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="installing-and-opening-cellpose" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Installing and Opening Cellpose<a href="cell-segmentation-using-cellpose.html#installing-and-opening-cellpose" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Cellpose is a generalist algorithm for cell and nucleus segmentation that supports the ability to train custom models for your own datasets. To install it, open <strong>Anaconda Prompt</strong> and run the following commands, depending on whether you have a CPU or GPU:</p>
+<div id="cpu-version" class="section level3 unnumbered hasAnchor">
+<h3>CPU Version<a href="cell-segmentation-using-cellpose.html#cpu-version" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="cell-segmentation-using-cellpose.html#cb1-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> cellpose python=3.9</span>
+<span id="cb1-2"><a href="cell-segmentation-using-cellpose.html#cb1-2" tabindex="-1"></a><span class="ex">conda</span> activate cellpose</span>
+<span id="cb1-3"><a href="cell-segmentation-using-cellpose.html#cb1-3" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install cellpose<span class="pp">[</span><span class="ss">gui</span><span class="pp">]</span></span></code></pre></div>
+</div>
+<div id="gpu-version" class="section level3 unnumbered hasAnchor">
+<h3>GPU Version<a href="cell-segmentation-using-cellpose.html#gpu-version" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="cell-segmentation-using-cellpose.html#cb2-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> cellpose python=3.9</span>
+<span id="cb2-2"><a href="cell-segmentation-using-cellpose.html#cb2-2" tabindex="-1"></a><span class="ex">conda</span> install pytorch pytorch-cuda=11.6 <span class="at">-c</span> pytorch <span class="at">-c</span> nvidia</span>
+<span id="cb2-3"><a href="cell-segmentation-using-cellpose.html#cb2-3" tabindex="-1"></a><span class="ex">conda</span> activate cellpose</span>
+<span id="cb2-4"><a href="cell-segmentation-using-cellpose.html#cb2-4" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install cellpose<span class="pp">[</span><span class="ss">gui</span><span class="pp">]</span></span></code></pre></div>
+<p>To <strong>open</strong> Cellpose (both now and in the future), run the following commands:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="cell-segmentation-using-cellpose.html#cb3-1" tabindex="-1"></a><span class="ex">conda</span> activate cellpose</span>
+<span id="cb3-2"><a href="cell-segmentation-using-cellpose.html#cb3-2" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> cellpose</span></code></pre></div>
+</div>
+</div>
+<div id="using-the-cellpose-gui" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Using the Cellpose GUI<a href="cell-segmentation-using-cellpose.html#using-the-cellpose-gui" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Note:</strong> The steps below were written based on the <strong>Cellpose 3</strong> GUI - newer versions may differ slightly</p>
+<ol style="list-style-type: decimal">
+<li>Drag an image from the <code>2b_cropped_images</code> folder into the GUI</li>
+<li>Click <strong>Models</strong> → <strong>Add custom torch model to GUI</strong> and select your custom model (in this case, the model used was titled <code>IFMasksOnIMCModel_HumanColon_TN3_CD12_FT1</code>)</li>
+<li>There are several settings available for you to change:</li>
+</ol>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>GUI Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>diameter (pixels)</td>
+<td>Approximate diameter of each cell - you can manually enter this, or press <code>calibrate</code> to let the model estimate it (the size is represented by a disk at the bottom left of the view window)</td>
+</tr>
+<tr class="even">
+<td>chan to segment</td>
+<td>Colour channel containing the <strong>cell body</strong> - should be set to <code>2: green</code></td>
+</tr>
+<tr class="odd">
+<td>chan2 (optional)</td>
+<td>Colour channel containing the <strong>cell nuclei</strong> - should be set to <code>3: blue</code></td>
+</tr>
+<tr class="even">
+<td>use GPU</td>
+<td>Whether to use the GPU - should be <strong>ticked</strong> if possible to speed up segmentation</td>
+</tr>
+<tr class="odd">
+<td>additional settings</td>
+<td>You can read more about these settings (eg. <code>flow threshold</code>) <a href="https://cellpose.readthedocs.io/en/latest/settings.html">here</a></td>
+</tr>
+</tbody>
+</table>
+<ol start="4" style="list-style-type: decimal">
+<li>Select your custom model under the <code>Other models</code> pane and click the <code>run</code> button next to it to start the segmentation:</li>
+</ol>
+<p><img src=".assets/image.png" width="280" style="display: block; margin: auto;" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>After the model has finished running, you should see masks drawn around each of your segmented cells:</li>
+</ol>
+<p><img src=".assets/image5.png" width="1262" style="display: block; margin: auto;" /></p>
+<p><strong>Note:</strong> you can toggle the coloured masks on and off by pressing <code>X</code> on your keyboard, and also the segmentation outlines by pressing <code>Z</code>.</p>
+<p>If the model requires further tuning, then go to the section below on <strong>‘Training a custom model’</strong> - this will teach you how to build a model from scratch. Otherwise, if you are happy with the model’s performance, skip straight to the <strong>‘Batch segmentation’</strong> section.</p>
+</div>
+<div id="training-a-custom-cellpose-model" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Training a Custom Cellpose Model<a href="cell-segmentation-using-cellpose.html#training-a-custom-cellpose-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To train a custom Cellpose model, follow the steps below. There is also a YouTube video <a href="https://www.youtube.com/watch?v=3Y1VKcxjNy4">here</a> that also demonstrates the process.</p>
+<ol style="list-style-type: decimal">
+<li>Drag an image from the <code>2b_cropped_images</code> folder into the GUI</li>
+<li>Ensure that your GUI settings are all configured appropriately (eg. your cell diameter is set correctly) - see the table in the section <strong>‘Using the Cellpose GUI’</strong> above for help with this</li>
+<li>Under the <code>Other models</code> pane, click the <code>dataset-specific models</code> button to bring up a drop-down menu of built-in Cellpose models</li>
+<li>Test each of these models on your image by selecting them and pressing <code>run</code> (there is also the additional <strong>cyto3</strong> model you can run by pressing <code>run cyto3</code> next to the <code>use GPU</code> checkbox)</li>
+</ol>
+<p><img src=".assets/image3.png" width="296" style="display: block; margin: auto;" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>Select the pre-trained model that worked best for your image and run it again</li>
+<li>Correct the segmentation results as you see fit by drawing new ROIs (<code>right-click</code>, draw and <code>right-click</code> again) and deleting incorrect ones (<code>Ctrl + left-click</code>) - remember to press <code>Ctrl + S</code> to save your changes</li>
+<li>Press <code>Ctrl + T</code> to open up the interface for training a new model:</li>
+</ol>
+<p><img src=".assets/image4.png" width="449" style="display: block; margin: auto;" /></p>
+<ol start="8" style="list-style-type: decimal">
+<li>Set <code>initial model</code> to the pre-trained model you ran in <strong>Step 5</strong>, name your custom model and press <code>OK</code> (the default values for the other parameters should work well in most cases)</li>
+<li>The model will train and then auto-run on the next image in the folder</li>
+<li>Repeat <strong>Steps 6-9</strong> until you are happy with the model’s performance</li>
+<li>The trained model is saved in a new <code>models</code> sub-folder within your <code>2b_cropped_images</code> folder, and will also appear in the GUI under the <code>Other models</code> pane (in the <code>custom models</code> drop-down menu)</li>
+</ol>
+<p><strong>Note:</strong> it is recommended you name your model in a systematic way to keep track of the settings you applied. Our model (<code>IFMasksOnIMCModel_HumanColon_TN3_CD12_FT1</code>) was named with special suffixes at the end to keep track of this information:
+- <strong>TN3:</strong> the initial model used was <strong>tissuenet_cp3</strong>
+- <strong>CD12:</strong> the cell diameter was set to 12 pixels
+- <strong>FT1:</strong> the flow threshold was set to 1</p>
+<p>You are now ready to use the model for <strong>‘Batch segmentation’</strong> in the next section.</p>
+</div>
+<div id="batch-segmentation" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Batch Segmentation<a href="cell-segmentation-using-cellpose.html#batch-segmentation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Once you are happy with the model’s performance, run the following commands in <strong>Anaconda Prompt</strong>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="cell-segmentation-using-cellpose.html#cb4-1" tabindex="-1"></a><span class="ex">conda</span> activate cellpose</span>
+<span id="cb4-2"><a href="cell-segmentation-using-cellpose.html#cb4-2" tabindex="-1"></a><span class="ex">pip</span> install jupyterlab</span>
+<span id="cb4-3"><a href="cell-segmentation-using-cellpose.html#cb4-3" tabindex="-1"></a><span class="ex">pip</span> install chardet</span>
+<span id="cb4-4"><a href="cell-segmentation-using-cellpose.html#cb4-4" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> charset-normalizer</span>
+<span id="cb4-5"><a href="cell-segmentation-using-cellpose.html#cb4-5" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> requests jupyter</span>
+<span id="cb4-6"><a href="cell-segmentation-using-cellpose.html#cb4-6" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> anaconda numpy</span>
+<span id="cb4-7"><a href="cell-segmentation-using-cellpose.html#cb4-7" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge scikit-image</span>
+<span id="cb4-8"><a href="cell-segmentation-using-cellpose.html#cb4-8" tabindex="-1"></a><span class="ex">conda</span> install <span class="at">-c</span> conda-forge matplotlib</span>
+<span id="cb4-9"><a href="cell-segmentation-using-cellpose.html#cb4-9" tabindex="-1"></a><span class="ex">jupyter</span> lab</span></code></pre></div>
+<p>Once again, this will automatically open a Jupyter instance at <code>http://localhost:8888/lab</code> in your browser. Upload the <code>3 CellposeBatchSeg.ipynb</code> file using the upload button and set the following variables:</p>
+<ul>
+<li><code>model_path</code>: path to your custom model</li>
+<li><code>analysis_dir</code>: path to your <code>analysis</code> folder</li>
+<li><code>channels</code>: colour channels used for segmentation</li>
+<li><code>cell_diameter</code>, <code>flow_threshold</code>, <code>cellprob_threshold</code>: other settings used when training your custom model</li>
+</ul>
+<p>An example is shown below.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="cell-segmentation-using-cellpose.html#cb5-1" tabindex="-1"></a><span class="co"># Set your required variables here</span></span>
+<span id="cb5-2"><a href="cell-segmentation-using-cellpose.html#cb5-2" tabindex="-1"></a>model_path <span class="op">=</span> <span class="st">&quot;IFMasksOnIMCModel_HumanColon_TN3_CD12_FT1&quot;</span></span>
+<span id="cb5-3"><a href="cell-segmentation-using-cellpose.html#cb5-3" tabindex="-1"></a>analysis_dir <span class="op">=</span> <span class="st">&quot;IMC/analysis&quot;</span></span>
+<span id="cb5-4"><a href="cell-segmentation-using-cellpose.html#cb5-4" tabindex="-1"></a>channels <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># This means Channel 1 was &#39;Green&#39; and Channel 2 was &#39;Blue&#39; (1 = R, 2 = G, 3 = B)</span></span>
+<span id="cb5-5"><a href="cell-segmentation-using-cellpose.html#cb5-5" tabindex="-1"></a>cell_diameter <span class="op">=</span> <span class="fl">12.4</span></span>
+<span id="cb5-6"><a href="cell-segmentation-using-cellpose.html#cb5-6" tabindex="-1"></a>flow_threshold <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb5-7"><a href="cell-segmentation-using-cellpose.html#cb5-7" tabindex="-1"></a>cellprob_threshold <span class="op">=</span> <span class="op">-</span><span class="dv">6</span></span></code></pre></div>
+<p>Once you have finished setting your directories, you can run the <strong>rest</strong> of the code in the <code>.ipynb</code> file. After running, you will notice <strong>3 new</strong> folders created in your <code>analysis</code> folder:</p>
+<ol style="list-style-type: decimal">
+<li><code>3a_segmentation_masks</code>: contains the integer-labelled cell segmentation masks (1 for each image)</li>
+<li><code>3b_for_cellprofiler</code>: contains the segmentation masks <strong>and</strong> corresponding full stack images for use in CellProfiler</li>
+<li><code>5_cellprofiler_output</code>: an empty folder that will contain the output from CellProfiler</li>
+</ol>
+<p>After you see the message <strong>‘Done!’</strong> printed, you can move to the next step.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="processing-images-for-cellpose.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-cellpose.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

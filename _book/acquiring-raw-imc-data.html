@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Acquiring Raw IMC Data | User Guide for IMC Analysis</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Acquiring Raw IMC Data | User Guide for IMC Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Acquiring Raw IMC Data | User Guide for IMC Analysis" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Oscar Dong" />
+
+
+<meta name="date" content="2024-10-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview-of-the-imc-data-analysis-pipeline"><i class="fa fa-check"></i><b>1.1</b> Overview of the IMC Data Analysis Pipeline</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#structure-of-the-guide"><i class="fa fa-check"></i><b>1.2</b> Structure of the Guide</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i><b>1.3</b> Contributors</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="acquiring-raw-imc-data.html"><a href="acquiring-raw-imc-data.html"><i class="fa fa-check"></i><b>2</b> Acquiring Raw IMC Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="acquiring-raw-imc-data.html"><a href="acquiring-raw-imc-data.html#setting-up-a-conda-environment"><i class="fa fa-check"></i><b>2.1</b> Setting Up a <code>conda</code> Environment</a></li>
+<li class="chapter" data-level="2.2" data-path="acquiring-raw-imc-data.html"><a href="acquiring-raw-imc-data.html#extracting-data-from-mcd-files"><i class="fa fa-check"></i><b>2.2</b> Extracting Data From MCD Files</a>
+<ul>
+<li class="chapter" data-level="" data-path="acquiring-raw-imc-data.html"><a href="acquiring-raw-imc-data.html#file-type-1-the-zipped-.mcd-files"><i class="fa fa-check"></i><strong>File Type #1:</strong> The zipped <code>.mcd</code> files</a></li>
+<li class="chapter" data-level="" data-path="acquiring-raw-imc-data.html"><a href="acquiring-raw-imc-data.html#file-type-2-the-panel.csv-file"><i class="fa fa-check"></i><strong>File Type #2:</strong> The <code>panel.csv</code> file</a></li>
+<li class="chapter" data-level="2.2.1" data-path="acquiring-raw-imc-data.html"><a href="acquiring-raw-imc-data.html#run-the-code"><i class="fa fa-check"></i><b>2.2.1</b> Run the Code</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">User Guide for IMC Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="acquiring-raw-imc-data" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Acquiring Raw IMC Data<a href="acquiring-raw-imc-data.html#acquiring-raw-imc-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="setting-up-a-conda-environment" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Setting Up a <code>conda</code> Environment<a href="acquiring-raw-imc-data.html#setting-up-a-conda-environment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Anaconda is a program used to install packages needed for many steps of the pipeline to run. Follow the steps below to set up Anaconda and a <code>conda</code> environment:</p>
+<ol style="list-style-type: decimal">
+<li>Install <a href="https://www.anaconda.com/download"><strong>Anaconda</strong></a> <br></li>
+<li>Once Anaconda is installed, navigate to the relevant command line interface:</li>
+</ol>
+<div align="center">
+<table>
+<colgroup>
+<col width="48%" />
+<col width="51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Windows</th>
+<th>macOS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Search for <strong>‘Anaconda Prompt’</strong> in the taskbar search <br> 2. Select <strong>Anaconda Prompt</strong> <br></td>
+<td>1. Use <code>cmd + space</code> to open Spotlight Search <br> 2. Type <strong>‘Terminal’</strong> and press <code>return</code> to open <br></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Enter the following commands (make sure to run the lines <strong>one at a time</strong>):</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="acquiring-raw-imc-data.html#cb1-1" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recursive</span> https://github.com/BodenmillerGroup/ImcSegmentationPipeline.git</span>
+<span id="cb1-2"><a href="acquiring-raw-imc-data.html#cb1-2" tabindex="-1"></a><span class="bu">cd</span> ImcSegmentationPipeline</span>
+<span id="cb1-3"><a href="acquiring-raw-imc-data.html#cb1-3" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--recursive</span> https://github.com/CVR-MucosalImmunology/IMC.git</span>
+<span id="cb1-4"><a href="acquiring-raw-imc-data.html#cb1-4" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> environment.yml</span>
+<span id="cb1-5"><a href="acquiring-raw-imc-data.html#cb1-5" tabindex="-1"></a><span class="ex">conda</span> activate imcsegpipe</span>
+<span id="cb1-6"><a href="acquiring-raw-imc-data.html#cb1-6" tabindex="-1"></a><span class="ex">pip</span> uninstall tifffile</span>
+<span id="cb1-7"><a href="acquiring-raw-imc-data.html#cb1-7" tabindex="-1"></a><span class="ex">pip</span> install tifffile==2024.8.10</span>
+<span id="cb1-8"><a href="acquiring-raw-imc-data.html#cb1-8" tabindex="-1"></a><span class="ex">pip</span> install jupyterlab</span></code></pre></div>
+<p>The <code>imcsegpipe</code> conda environment has now been <strong>set up</strong>! To begin on the first step of the pipeline, copy the following commands into the terminal to <strong>activate</strong> this new environment:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="acquiring-raw-imc-data.html#cb2-1" tabindex="-1"></a><span class="ex">conda</span> activate imcsegpipe</span>
+<span id="cb2-2"><a href="acquiring-raw-imc-data.html#cb2-2" tabindex="-1"></a><span class="ex">jupyter</span> lab</span></code></pre></div>
+<p>This will automatically open a Jupyter instance at <code>http://localhost:8888/lab</code> in your browser. Upload the <code>1 IMCPreprocessing.ipynb</code> file using the upload button.</p>
+</div>
+<div id="extracting-data-from-mcd-files" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Extracting Data From MCD Files<a href="acquiring-raw-imc-data.html#extracting-data-from-mcd-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To begin, make sure to create the following empty folders in the <strong>same</strong> directory:</p>
+<ol style="list-style-type: decimal">
+<li><code>analysis</code>: the directory you will work out of to perform your analysis</li>
+<li><code>raw</code>: the directory that holds the raw files as input into the pipeline</li>
+</ol>
+<p>Your file directory should look something like this:</p>
+<blockquote>
+<p>├── analysis <br>
+├── raw <br></p>
+</blockquote>
+<p>Within the <code>raw</code> folder, there should be <strong>2 types</strong> of files:</p>
+<div id="file-type-1-the-zipped-.mcd-files" class="section level3 unnumbered hasAnchor">
+<h3><strong>File Type #1:</strong> The zipped <code>.mcd</code> files<a href="acquiring-raw-imc-data.html#file-type-1-the-zipped-.mcd-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Hyperion Imaging System produces vendor controlled <code>.mcd</code> and <code>.txt</code> files in the following folder structure:</p>
+<blockquote>
+<p>├── {XYZ}.mcd <br>
+├── {XYZ}_ROI_001_1.txt <br>
+├── {XYZ}_ROI_002_2.txt <br>
+├── {XYZ}_ROI_003_3.txt <br></p>
+</blockquote>
+<p>where <code>XYZ</code> defines the filename, <code>ROI_001</code>, <code>ROI_002</code>, <code>ROI_003</code> are names (description) for the selected regions of interest (ROI) and <code>1</code>, <code>2</code>, <code>3</code> indicate the acquistion identifiers. The ROI description entry can be specified in the Fluidigm software when selecting ROIs. The <code>.mcd</code> file contains the raw imaging data of all acquired ROIs, while each <code>.txt</code> file contains data of a single ROI.</p>
+<p>To enforce a consistent naming scheme and to bundle all metadata, make sure to <strong>zip the folder</strong> for preprocessing. Each <code>.zip</code> file should only contain data from a <strong>single</strong> <code>.mcd</code> file (and any associated <code>.txt</code> files), and should be named <code>Sample1.zip</code>, <code>Sample2.zip</code> and so on.</p>
+<p>Your file directory should look something like this:</p>
+<blockquote>
+<p>raw <br>
+├── Sample1.zip <br>
+│ ├── {A}.mcd <br>
+│ ├── {A}_ROI_001_1.txt <br>
+│ ├── {A}_ROI_002_2.txt <br>
+│ └── {A}_ROI_003_3.txt <br>
+├── Sample2.zip <br>
+│ ├── {B}.mcd <br>
+│ ├── {B}_ROI_001_1.txt <br>
+│ ├── {B}_ROI_002_2.txt <br>
+│ └── {B}_ROI_003_3.txt <br>
+└── … <br></p>
+</blockquote>
+</div>
+<div id="file-type-2-the-panel.csv-file" class="section level3 unnumbered hasAnchor">
+<h3><strong>File Type #2:</strong> The <code>panel.csv</code> file<a href="acquiring-raw-imc-data.html#file-type-2-the-panel.csv-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The panel file (in <code>.csv</code> format) specifies the type of antibodies that were used in the experiment and all additional channels (eg. metals used for counterstaining) that you want to include in downstream processing. Example entries to the <code>panel.csv</code> file should look like this:</p>
+<div align="center">
+<table>
+<thead>
+<tr class="header">
+<th>Metal Tag</th>
+<th>Target</th>
+<th>Full</th>
+<th>Segment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nd145</td>
+<td>CD83</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Nd146</td>
+<td>CD8</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Sm147</td>
+<td>Podoplanin</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Nd148</td>
+<td>CD16</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>Metal Tag</strong>: indicates the isotope used</li>
+<li><strong>Target</strong>: indicates the target marker for the particular isotope</li>
+<li><strong>Full</strong>: a <code>1</code> specifies channels you wish to analyse later (eg. to calculate marker intensities for), while a <code>0</code> specifies channels you do not wish to analyse</li>
+<li><strong>Segment</strong>: a <code>1</code> specifies channels that will specifically be used for segmentation in Cellpose later, while a <code>0</code> indicates channels that will not be used</li>
+</ul>
+<p>Your <code>raw</code> folder should look like this:</p>
+<blockquote>
+<p>raw <br>
+├── panel.csv <br>
+├── Sample1.zip <br>
+├── Sample2.zip <br>
+├── Sample3.zip <br>
+└── … <br></p>
+</blockquote>
+</div>
+<div id="run-the-code" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Run the Code<a href="acquiring-raw-imc-data.html#run-the-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Within the <code>1 IMCPreprocessing.ipynb</code> file, you are required to set the following variables in the first code chunk:</p>
+<ul>
+<li><code>analysis</code>: set this to your <code>analysis</code> folder</li>
+<li><code>raw</code>: set this to your <code>raw</code> folder</li>
+</ul>
+<p>An example is shown below. For <strong>Windows</strong> users, make sure that you are using <strong>forward slashes</strong> rather than back slashes.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="acquiring-raw-imc-data.html#cb3-1" tabindex="-1"></a><span class="co"># Set this to your &#39;analysis&#39; folder</span></span>
+<span id="cb3-2"><a href="acquiring-raw-imc-data.html#cb3-2" tabindex="-1"></a>analysis <span class="op">=</span> <span class="st">&quot;IMC/analysis&quot;</span></span>
+<span id="cb3-3"><a href="acquiring-raw-imc-data.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="acquiring-raw-imc-data.html#cb3-4" tabindex="-1"></a><span class="co"># Set this to your &#39;raw&#39; folder</span></span>
+<span id="cb3-5"><a href="acquiring-raw-imc-data.html#cb3-5" tabindex="-1"></a>raw <span class="op">=</span> <span class="st">&quot;IMC/raw&quot;</span></span></code></pre></div>
+<p>Once you have finished setting your directories, you can <strong>run</strong> the rest of the code in the <code>.ipynb</code> file. After running, you will notice <strong>3 new</strong> folders created in your <code>analysis</code> folder:</p>
+<ol style="list-style-type: decimal">
+<li><code>1a_extracted_mcd</code>: contains individual folders (one per sample), each of which contain multiple <code>.ome.tiff</code> files (one per acquisition) and other files extracted from the original <code>.mcd</code> file</li>
+<li><code>1b_for_segmentation</code>: contains the segmentation stacks for use in Cellpose, as well as <code>.csv</code> files indicating the channel order</li>
+<li><code>1c_full_images</code>: contains the full stacks for analysis, as well as <code>.csv</code> files indicating the channel order</li>
+</ol>
+<p>After you see the message <strong>‘Done!’</strong> printed, you can move to the next step.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-intro.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

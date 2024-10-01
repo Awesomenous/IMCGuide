@@ -1,0 +1,41 @@
+--- 
+title: "User Guide for IMC Analysis"
+author: "Oscar Dong"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::gitbook,
+  set in the _output.yml file.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# IMC Data Analysis Pipeline
+
+**Author**: Oscar  
+**Compiled**: 2024-10-01
+
+## Overview of the IMC Data Analysis Pipeline
+
+This guide provides a detailed overview of an analysis pipeline designed to process and analyse single-cell data obtained from Imaging Mass Cytometry (IMC). It covers the entire workflow from data pre-processing to celltype analysis, ensuring users can extract meaningful biological insights from multiplexed imaging datasets. The pipeline is implemented across several platforms and software, including **Python**, **ImageJ**, **R** and **CellProfiler**. 
+
+## Structure of this Guide
+
+The workflow is divided into the following key sections:
+
+1. **Part A**: extraction and processing of raw IMC images 
+2. **Part B**: analysis of cell data in **R**
+
+For the full code, please refer to the GitHub repository. 
+
+## Contributors
+
+* Oscar Dong
+* Heeva Baharlou
+* Thomas O'Neil
+

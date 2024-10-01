@@ -1,0 +1,137 @@
+# Cell Segmentation Using Cellpose
+
+## Installing and Opening Cellpose
+
+Cellpose is a generalist algorithm for cell and nucleus segmentation that supports the ability to train custom models for your own datasets. To install it, open **Anaconda Prompt** and run the following commands, depending on whether you have a CPU or GPU:
+
+### CPU Version {-}
+
+~~~~sh
+conda create --name cellpose python=3.9
+conda activate cellpose
+python -m pip install cellpose[gui]
+~~~~
+
+### GPU Version {-}
+
+~~~~sh
+conda create --name cellpose python=3.9
+conda install pytorch pytorch-cuda=11.6 -c pytorch -c nvidia
+conda activate cellpose
+python -m pip install cellpose[gui]
+~~~~
+
+To **open** Cellpose (both now and in the future), run the following commands:
+
+~~~~sh
+conda activate cellpose
+python -m cellpose
+~~~~
+
+## Using the Cellpose GUI
+
+**Note:** The steps below were written based on the **Cellpose 3** GUI - newer versions may differ slightly
+
+1. Drag an image from the `2b_cropped_images` folder into the GUI 
+2. Click **Models** &rarr; **Add custom torch model to GUI** and select your custom model (in this case, the model used was titled `IFMasksOnIMCModel_HumanColon_TN3_CD12_FT1`)
+3. There are several settings available for you to change:
+
+| GUI Setting | Description |
+| -- | -- |
+| diameter (pixels) | Approximate diameter of each cell - you can manually enter this, or press `calibrate` to let the model estimate it (the size is represented by a disk at the bottom left of the view window) |
+| chan to segment | Colour channel containing the **cell body** - should be set to `2: green` |
+| chan2 (optional) |  Colour channel containing the **cell nuclei** - should be set to `3: blue` |
+| use GPU | Whether to use the GPU - should be **ticked** if possible to speed up segmentation |
+| additional settings | You can read more about these settings (eg. `flow threshold`) [here](https://cellpose.readthedocs.io/en/latest/settings.html) |
+
+4. Select your custom model under the `Other models` pane and click the `run` button next to it to start the segmentation:
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(".assets/image.png")
+```
+
+5. After the model has finished running, you should see masks drawn around each of your segmented cells:
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(".assets/image5.png")
+```
+
+**Note:** you can toggle the coloured masks on and off by pressing `X` on your keyboard, and also the segmentation outlines by pressing `Z`.
+
+If the model requires further tuning, then go to the section below on **‘Training a custom model’** - this will teach you how to build a model from scratch. Otherwise, if you are happy with the model's performance, skip straight to the **'Batch segmentation'** section.
+
+## Training a Custom Cellpose Model
+
+To train a custom Cellpose model, follow the steps below. There is also a YouTube video [here](https://www.youtube.com/watch?v=3Y1VKcxjNy4) that also demonstrates the process. 
+
+1. Drag an image from the `2b_cropped_images` folder into the GUI
+2. Ensure that your GUI settings are all configured appropriately (eg. your cell diameter is set correctly) - see the table in the section **'Using the Cellpose GUI'** above for help with this
+3. Under the `Other models` pane, click the `dataset-specific models` button to bring up a drop-down menu of built-in Cellpose models
+4. Test each of these models on your image by selecting them and pressing `run` (there is also the additional **cyto3** model you can run by pressing `run cyto3` next to the `use GPU` checkbox)
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(".assets/image3.png")
+```
+
+5. Select the pre-trained model that worked best for your image and run it again
+6. Correct the segmentation results as you see fit by drawing new ROIs (`right-click`, draw and `right-click` again) and deleting incorrect ones (`Ctrl + left-click`) - remember to press `Ctrl + S` to save your changes
+7. Press `Ctrl + T` to open up the interface for training a new model:
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(".assets/image4.png")
+```
+
+8. Set `initial model` to the pre-trained model you ran in **Step 5**, name your custom model and press `OK` (the default values for the other parameters should work well in most cases)
+9. The model will train and then auto-run on the next image in the folder 
+10. Repeat **Steps 6-9** until you are happy with the model's performance
+11. The trained model is saved in a new `models` sub-folder within your `2b_cropped_images` folder, and will also appear in the GUI under the `Other models` pane (in the `custom models` drop-down menu)
+
+**Note:** it is recommended you name your model in a systematic way to keep track of the settings you applied. Our model (`IFMasksOnIMCModel_HumanColon_TN3_CD12_FT1`) was named with special suffixes at the end to keep track of this information:
+- **TN3:** the initial model used was **tissuenet_cp3** 
+- **CD12:** the cell diameter was set to 12 pixels
+- **FT1:** the flow threshold was set to 1
+
+You are now ready to use the model for **'Batch segmentation'** in the next section.
+
+## Batch Segmentation
+
+Once you are happy with the model's performance, run the following commands in **Anaconda Prompt**:
+
+~~~~sh
+conda activate cellpose
+pip install jupyterlab
+pip install chardet
+pip install --upgrade charset-normalizer
+pip install --upgrade requests jupyter
+conda install -c anaconda numpy
+conda install -c conda-forge scikit-image
+conda install -c conda-forge matplotlib
+jupyter lab
+~~~~
+
+Once again, this will automatically open a Jupyter instance at `http://localhost:8888/lab` in your browser. Upload the `3 CellposeBatchSeg.ipynb` file using the upload button and set the following variables:
+
+- `model_path`: path to your custom model
+- `analysis_dir`: path to your `analysis` folder
+- `channels`: colour channels used for segmentation
+- `cell_diameter`, `flow_threshold`, `cellprob_threshold`: other settings used when training your custom model
+
+An example is shown below.
+
+```{python}
+# Set your required variables here
+model_path = "IFMasksOnIMCModel_HumanColon_TN3_CD12_FT1"
+analysis_dir = "IMC/analysis"
+channels = [2, 3] # This means Channel 1 was 'Green' and Channel 2 was 'Blue' (1 = R, 2 = G, 3 = B)
+cell_diameter = 12.4
+flow_threshold = 3
+cellprob_threshold = -6
+```
+
+Once you have finished setting your directories, you can run the **rest** of the code in the `.ipynb` file. After running, you will notice **3 new** folders created in your `analysis` folder:
+
+1. `3a_segmentation_masks`: contains the integer-labelled cell segmentation masks (1 for each image)
+2. `3b_for_cellprofiler`: contains the segmentation masks **and** corresponding full stack images for use in CellProfiler
+3. `5_cellprofiler_output`: an empty folder that will contain the output from CellProfiler 
+
+After you see the message **'Done!'** printed, you can move to the next step.
