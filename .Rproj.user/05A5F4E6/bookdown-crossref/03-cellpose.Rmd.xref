@@ -1,8 +1,0 @@
-h1:cell-segmentation-using-cellpose Cell Segmentation Using Cellpose
-h2:installing-and-opening-cellpose Installing and Opening Cellpose
-h3:cpu-version CPU Version
-h3:gpu-version GPU Version
-h2:using-the-cellpose-gui Using the Cellpose GUI
-h2:training-a-custom-cellpose-model Training a Custom Cellpose Model
-h2:batch-segmentation Batch Segmentation
-
