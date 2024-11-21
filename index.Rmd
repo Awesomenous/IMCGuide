@@ -17,9 +17,6 @@ github-repo: rstudio/bookdown-demo
 
 # IMC Data Analysis Pipeline
 
-**Author**: Oscar  
-**Compiled**: 2024-10-01
-
 ## Overview of the IMC Data Analysis Pipeline
 
 This guide provides a detailed overview of an analysis pipeline designed to process and analyse single-cell data obtained from Imaging Mass Cytometry (IMC). It covers the entire workflow from data pre-processing to celltype analysis, ensuring users can extract meaningful biological insights from multiplexed imaging datasets. The pipeline is implemented across several platforms and software, including **Python**, **ImageJ**, **R** and **CellProfiler**. 
@@ -32,10 +29,3 @@ The workflow is divided into the following key sections:
 2. **Part B**: analysis of cell data in **R**
 
 For the full code, please refer to the [GitHub repository](https://github.com/CVR-MucosalImmunology/IMC). 
-
-## Contributors
-
-* Oscar Dong
-* Heeva Baharlou
-* Thomas O'Neil
-
